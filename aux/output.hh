@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Thu Apr 13 15:10:37 2017 by ROOT version 6.04/14
+// Tue May 23 11:43:51 2017 by ROOT version 6.04/14
 // from TTree output/output
-// found on file: data.root
+// found on file: 403280.root
 //////////////////////////////////////////////////////////
 
 #ifndef output_h
@@ -11,7 +11,6 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
-
 #include <vector>
 using namespace std;
 
@@ -47,6 +46,8 @@ public :
    Int_t           ph_convType2;
    Bool_t          ph_isTight1;
    Bool_t          ph_isTight2;
+   Bool_t          ph_isLoose1;
+   Bool_t          ph_isLoose2;
    Bool_t          ph_passIso1;
    Bool_t          ph_passIso2;
    Double_t        ph_conv_z1;
@@ -57,6 +58,12 @@ public :
    Double_t        ph_conv_z_err2;
    Double_t        ph_calo_z2;
    Double_t        ph_calo_z_err2;
+   Float_t         ph1_topoetcone20;
+   Float_t         ph1_topoetcone40;
+   Float_t         ph1_ptcone20;
+   Float_t         ph2_topoetcone20;
+   Float_t         ph2_topoetcone40;
+   Float_t         ph2_ptcone20;
    Float_t         ph1_f1;
    Float_t         ph1_f3;
    Float_t         ph1_etas2;
@@ -88,6 +95,7 @@ public :
    Double_t        wt_nEvents;
    Double_t        wt_wt;
    Double_t        intlumi;
+   Int_t           HLT_2g20_tight;
    Int_t           HLT_2g50_loose;
    Int_t           HLT_g100_loose;
    Int_t           HLT_g10_loose;
@@ -129,6 +137,8 @@ public :
    TBranch        *b_ph_convType2;   //!
    TBranch        *b_ph_isTight1;   //!
    TBranch        *b_ph_isTight2;   //!
+   TBranch        *b_ph_isLoose1;   //!
+   TBranch        *b_ph_isLoose2;   //!
    TBranch        *b_ph_passIso1;   //!
    TBranch        *b_ph_passIso2;   //!
    TBranch        *b_ph_conv_z1;   //!
@@ -139,6 +149,12 @@ public :
    TBranch        *b_ph_conv_z_err2;   //!
    TBranch        *b_ph_calo_z2;   //!
    TBranch        *b_ph_calo_z_err2;   //!
+   TBranch        *b_ph1_topoetcone20;   //!
+   TBranch        *b_ph1_topoetcone40;   //!
+   TBranch        *b_ph1_ptcone20;   //!
+   TBranch        *b_ph2_topoetcone20;   //!
+   TBranch        *b_ph2_topoetcone40;   //!
+   TBranch        *b_ph2_ptcone20;   //!
    TBranch        *b_ph1_f1;   //!
    TBranch        *b_ph1_f3;   //!
    TBranch        *b_ph1_etas2;   //!
@@ -170,6 +186,7 @@ public :
    TBranch        *b_wt_nEvents;   //!
    TBranch        *b_wt_wt;   //!
    TBranch        *b_intlumi;   //!
+   TBranch        *b_HLT_2g20_tight;   //!
    TBranch        *b_HLT_2g50_loose;   //!
    TBranch        *b_HLT_g100_loose;   //!
    TBranch        *b_HLT_g10_loose;   //!
@@ -207,9 +224,9 @@ output::output(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("data.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("403280.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("data.root");
+         f = new TFile("403280.root");
       }
       f->GetObject("output",tree);
 
@@ -280,6 +297,8 @@ void output::Init(TTree *tree)
    fChain->SetBranchAddress("ph_convType2", &ph_convType2, &b_ph_convType2);
    fChain->SetBranchAddress("ph_isTight1", &ph_isTight1, &b_ph_isTight1);
    fChain->SetBranchAddress("ph_isTight2", &ph_isTight2, &b_ph_isTight2);
+   fChain->SetBranchAddress("ph_isLoose1", &ph_isLoose1, &b_ph_isLoose1);
+   fChain->SetBranchAddress("ph_isLoose2", &ph_isLoose2, &b_ph_isLoose2);
    fChain->SetBranchAddress("ph_passIso1", &ph_passIso1, &b_ph_passIso1);
    fChain->SetBranchAddress("ph_passIso2", &ph_passIso2, &b_ph_passIso2);
    fChain->SetBranchAddress("ph_conv_z1", &ph_conv_z1, &b_ph_conv_z1);
@@ -290,6 +309,12 @@ void output::Init(TTree *tree)
    fChain->SetBranchAddress("ph_conv_z_err2", &ph_conv_z_err2, &b_ph_conv_z_err2);
    fChain->SetBranchAddress("ph_calo_z2", &ph_calo_z2, &b_ph_calo_z2);
    fChain->SetBranchAddress("ph_calo_z_err2", &ph_calo_z_err2, &b_ph_calo_z_err2);
+   fChain->SetBranchAddress("ph1_topoetcone20", &ph1_topoetcone20, &b_ph1_topoetcone20);
+   fChain->SetBranchAddress("ph1_topoetcone40", &ph1_topoetcone40, &b_ph1_topoetcone40);
+   fChain->SetBranchAddress("ph1_ptcone20", &ph1_ptcone20, &b_ph1_ptcone20);
+   fChain->SetBranchAddress("ph2_topoetcone20", &ph2_topoetcone20, &b_ph2_topoetcone20);
+   fChain->SetBranchAddress("ph2_topoetcone40", &ph2_topoetcone40, &b_ph2_topoetcone40);
+   fChain->SetBranchAddress("ph2_ptcone20", &ph2_ptcone20, &b_ph2_ptcone20);
    fChain->SetBranchAddress("ph1_f1", &ph1_f1, &b_ph1_f1);
    fChain->SetBranchAddress("ph1_f3", &ph1_f3, &b_ph1_f3);
    fChain->SetBranchAddress("ph1_etas2", &ph1_etas2, &b_ph1_etas2);
@@ -321,6 +346,7 @@ void output::Init(TTree *tree)
    fChain->SetBranchAddress("wt_nEvents", &wt_nEvents, &b_wt_nEvents);
    fChain->SetBranchAddress("wt_wt", &wt_wt, &b_wt_wt);
    fChain->SetBranchAddress("intlumi", &intlumi, &b_intlumi);
+   fChain->SetBranchAddress("HLT_2g20_tight", &HLT_2g20_tight, &b_HLT_2g20_tight);
    fChain->SetBranchAddress("HLT_2g50_loose", &HLT_2g50_loose, &b_HLT_2g50_loose);
    fChain->SetBranchAddress("HLT_g100_loose", &HLT_g100_loose, &b_HLT_g100_loose);
    fChain->SetBranchAddress("HLT_g10_loose", &HLT_g10_loose, &b_HLT_g10_loose);

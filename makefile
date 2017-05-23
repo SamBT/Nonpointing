@@ -61,6 +61,8 @@ analysis : analysis.o output.o
 signal_analysis : signal_analysis.o output.o
 diphoton : diphoton.o output.o
 singlephoton : singlephoton.o output.o
+diphoton_noloosecut : diphoton_noloosecut.o output.o
+singlephoton_noloosecut : singlephoton_noloosecut.o output.o
 
 ############################################################################
 # General rules. The first two need not be specified due to implicit rules, 

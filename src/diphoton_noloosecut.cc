@@ -80,12 +80,16 @@ int main (int argc, char **argv) {
 
 	TH2F *h_ZDCA_timing = new TH2F("h_ZDCA_timing","h_ZDCA_timing",12,-2,10,25,0,2000);
 	TH2F *h_ZDCA_timing_tight = new TH2F("h_ZDCA_timing_tight","h_ZDCA_timing_tight",12,-2,10,25,0,2000);
+	TH2F *h_ZDCA_timing_loose = new TH2F("h_ZDCA_timing_loose","h_ZDCA_timing_loose",12,-2,10,25,0,2000);
 
-	TEfficiency *h_ZDCA_timing_eff = new TEfficiency("h_ZDCA_timing_eff","h_ZDCA_timing_eff",12,-2,10,25,0,2000);
+	TEfficiency *h_ZDCA_timing_tight_eff = new TEfficiency("h_ZDCA_timing_tight_eff","h_ZDCA_timing_tight_eff",12,-2,10,25,0,2000);
+	TEfficiency *h_ZDCA_timing_loose_eff = new TEfficiency("h_ZDCA_timing_loose_eff","h_ZDCA_timing_loose_eff",12,-2,10,25,0,2000);
 
 	h_ZDCA_tight_eff->SetUseWeightedEvents();
 	h_timing_tight_eff->SetUseWeightedEvents();
-	h_ZDCA_timing_eff->SetUseWeightedEvents();
+	h_ZDCA_timing_tight_eff->SetUseWeightedEvents();
+	h_ZDCA_timing_loose_eff->SetUseWeightedEvents();
+
 
 	double z[7] = { 0, 40 , 80 , 120 , 160 , 200 , 90000};
 	double t[7] = { -4, 0.5 , 1.1, 1.3, 1.5, 1.8, 90000};
@@ -130,7 +134,8 @@ int main (int argc, char **argv) {
 
 	    double timing = p->ph_t1 ;
 	    double caloZ = p->ph_calo_z1 ;
-	    int tight = -1;
+	    int loose = 0;
+	    int tight = 0;
 
 
 	    if( fabs(p->ph_eta1) <= 1.37 && fabs(p->ph_eta2) <= 1.37  ) {
@@ -138,12 +143,14 @@ int main (int argc, char **argv) {
 			timing =  p->ph_t1 > p->ph_t2 ? p->ph_t1 : p->ph_t2 ;
 			caloZ =  p->ph_t1 > p->ph_t2 ? p->ph_calo_z1 : p->ph_calo_z2 ;
 			tight = p->ph_t1 > p->ph_t2 ? p->ph_isTight1 : p->ph_isTight2;
+			loose = p->ph_t1 > p->ph_t2 ? p->ph_isLoose1 : p->ph_isLoose2;
 		}
 		else if ( fabs(p->ph_eta1) > 1.37 && fabs(p->ph_eta2) < 1.37  ) {
 			dZsigned  = ( p->ph_calo_z2 - p->PV_z);
 			timing = p->ph_t2 ;
 			caloZ = p->ph_calo_z2 ;
 			tight = p->ph_isTight2;
+			loose = p->ph_isLoose2;
 		}
 
 		double dZ = fabs(dZsigned);
@@ -156,9 +163,11 @@ int main (int argc, char **argv) {
 			h_timing_tight->Fill(timing,wt);
 			h_ZDCA_timing_tight->Fill(timing,dZ,wt);
 		}
+		if (loose) h_ZDCA_timing_loose->Fill(timing,dZ,wt);
 		h_ZDCA_tight_eff->Fill(tight,dZ);
 		h_timing_tight_eff->Fill(tight,timing);
-		h_ZDCA_timing_eff->Fill(tight,timing,dZ);
+		h_ZDCA_timing_tight_eff->Fill(tight,timing,dZ);
+		h_ZDCA_timing_loose_eff->Fill(loose,timing,dZ);
 
         for( int k = 0 ; k < 6 ; k ++ ) {
 			if( dZ  > z[k] &&  dZ < z[k+1] ) { 
@@ -248,7 +257,9 @@ int main (int argc, char **argv) {
 	h_timing_tight_eff->Write();
 	h_ZDCA_timing->Write();
 	h_ZDCA_timing_tight->Write();
-	h_ZDCA_timing_eff->Write();
+	h_ZDCA_timing_loose->Write();
+	h_ZDCA_timing_tight_eff->Write();
+	h_ZDCA_timing_loose_eff->Write();
     f.Close();
 
 	return 0 ;

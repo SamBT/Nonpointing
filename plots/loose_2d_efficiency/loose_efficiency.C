@@ -1,15 +1,17 @@
+#include "AtlasLabels.h"
+#include "AtlasLabels.C"
 void plot(TString type) {
 	TString path = "/global/homes/s/sambt/workarea/nonpointing/analysis_output/" + type;
-	TFile *s1 = TFile::Open(path+"/signal/403280.root");
-	TFile *s2 = TFile::Open(path+"/signal/403281.root");
-	TFile *s3 = TFile::Open(path+"/signal/403282.root");
-	TFile *s4 = TFile::Open(path+"/signal/403283.root");
-	TFile *s5 = TFile::Open(path+"/signal/403284.root");
-	TFile *s6 = TFile::Open(path+"/signal/403285.root");
-	TFile *s7 = TFile::Open(path+"/signal/403286.root");
+	TFile *s1 = TFile::Open(path+"/signal_noloosecut/403280.root");
+	TFile *s2 = TFile::Open(path+"/signal_noloosecut/403281.root");
+	TFile *s3 = TFile::Open(path+"/signal_noloosecut/403282.root");
+	TFile *s4 = TFile::Open(path+"/signal_noloosecut/403283.root");
+	TFile *s5 = TFile::Open(path+"/signal_noloosecut/403284.root");
+	TFile *s6 = TFile::Open(path+"/signal_noloosecut/403285.root");
+	TFile *s7 = TFile::Open(path+"/signal_noloosecut/403286.root");
 
-	TString tight = "h_ZDCA_timing_tight";
-	TString ratio = "h_ZDCA_timing_eff";
+	TString tight = "h_ZDCA_timing_loose";
+	TString ratio = "h_ZDCA_timing_loose_eff";
 
 	TH2F *ht1 = (TH2F*)s1->Get(tight);
 	TH2F *ht2 = (TH2F*)s2->Get(tight);
@@ -49,17 +51,38 @@ void plot(TString type) {
 
 	ht->GetYaxis()->SetRangeUser(0.1*ht->GetBinContent(ht->FindLastBinAbove(0)),10*ht->GetMaximum());
 
+	//eff->Scale(100) //convert to percentages
+
 	TCanvas *c = new TCanvas();
 
-	c->SetGrid();
-	ht->GetYaxis()->SetLabelSize(0.02);
-	ht->GetXaxis()->SetLabelSize(0.02);
-	ht->GetXaxis()->SetNdivisions(12);
-	ht->GetYaxis()->SetNdivisions(25);
-	gStyle->SetPaintTextFormat("4.2f");
-  	ht->Draw("axis");
-  	eff->Draw("text");
+	int bin = -100;
+	double percent = 0;
 
+	for (int i = 1; i <= ht->GetNbinsX(); i++) {
+		for (int j = 1; j <= ht->GetNbinsY(); j++) {
+			bin = eff->GetGlobalBin(i,j);
+			percent = eff->GetEfficiency(bin);
+			ht->SetBinContent(i,j,percent*100);
+		}
+	}
+
+	c->SetGridx();
+	ht->SetMarkerSize(1.5);
+	ht->GetYaxis()->SetTickSize(0.02);
+	ht->GetXaxis()->SetNdivisions(12);
+	ht->GetYaxis()->SetRangeUser(0,2000);
+	gStyle->SetPaintTextFormat("4.0f");
+  	ht->Draw("text45");
+  	//eff->SetMarkerSize(1.5);
+  	//eff->Draw("text45same");
+
+  	TLatex l;
+  	l.SetNDC();
+  	l.SetTextSize(0.04);
+  	l.DrawLatex(0.7,0.85,"Loose Cut Efficiency");
+  	if (type == "diphoton") l.DrawLatex(0.7,0.8,"Diphoton");
+  	if (type == "singlephoton") l.DrawLatex(0.7,0.8,"Singlephoton");
+  	ATLASLabel(0.7,0.75,"Internal");
 
   	TLegend leg(0.65,0.80,0.895,0.89);
   	leg.SetLineColor(0);
@@ -67,14 +90,14 @@ void plot(TString type) {
   	leg.SetTextSize(0.05);
   	leg.SetShadowColor(0);
 
-  	TString output = "Tight_v_loose_z_t_efficiency_" + type + "_SBT";
+  	TString output = "Loose_cut_z_t_efficiency_" + type + "_SBT";
   	TString feps = ".eps", fpng = ".png", fpdf = ".pdf";
   	c->SaveAs(output+feps);
   	c->SaveAs(output+fpng);
   	c->SaveAs(output+fpdf);
 }
 
-void tight_v_loose_2d() {
+void loose_efficiency() {
 	plot("diphoton");
 	plot("singlephoton");
 }
