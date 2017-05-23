@@ -1,0 +1,24 @@
+// For the top plots - y axis label settings
+
+h1->GetYaxis()->SetTitle("a.u.");   
+h1->GetYaxis()->SetLabelSize(0.07);
+h1->GetYaxis()->SetLabelOffset(0.01);
+h1->GetYaxis()->SetTitleSize(0.08);
+h1->GetYaxis()->SetTitleOffset(0.81);
+
+//For ratio plots
+
+h1_clone->GetXaxis()->SetTitle("Title");
+h1_clone->GetYaxis()->SetRangeUser(0.,2.0);
+h1_clone->GetYaxis()->SetTitle("A/B");
+h1_clone->GetYaxis()->SetNdivisions(8);
+
+h1_clone->GetXaxis()->SetLabelSize(0.15);
+h1_clone->GetXaxis()->SetLabelOffset(0.015);
+h1_clone->GetXaxis()->SetTitleSize(0.125);
+h1_clone->GetXaxis()->SetTitleOffset(1.15);
+
+h1_clone->GetYaxis()->SetLabelSize(0.1);
+h1_clone->GetYaxis()->SetLabelOffset(0.01);
+h1_clone->GetYaxis()->SetTitleSize(0.18);
+h1_clone->GetYaxis()->SetTitleOffset(0.35);

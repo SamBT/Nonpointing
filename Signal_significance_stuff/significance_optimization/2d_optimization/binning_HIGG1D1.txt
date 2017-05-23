@@ -1,0 +1,90 @@
+-------------------------------RUN = 403280, SR1-------------------------------
+ZDCA BIN: 0 < ZDCA < 20, timing bins = {-21.0, 0.8, 2.2, 20.8, }
+ZDCA BIN: 20 < ZDCA < 50, timing bins = {-21.0, 0.8, 2.4, 20.8, }
+ZDCA BIN: 50 < ZDCA < 120, timing bins = {-21.0, 1.6, 2.0, 20.8, }
+ZDCA BIN: 120 < ZDCA < 970, timing bins = {-21.0, 1.2, 1.4, 20.8, }
+ZDCA BIN: 970 < ZDCA < 1990, timing bins = {-21.0, 2.0, 3.0, 20.8, }
+-------------------------------RUN = 403280, SR2-------------------------------
+ZDCA BIN: 0 < ZDCA < 390, timing bins = {-21.0, 2.0, 2.4, 20.8, }
+ZDCA BIN: 390 < ZDCA < 970, timing bins = {-21.2, -21.0, 20.8, }
+ZDCA BIN: 970 < ZDCA < 980, timing bins = {-21.2, -21.0, 20.8, }
+ZDCA BIN: 980 < ZDCA < 1990, timing bins = {-21.0, 2.0, 20.8, }
+
+
+-------------------------------RUN = 403281, SR1-------------------------------
+ZDCA BIN: 0 < ZDCA < 170, timing bins = {-21.0, -2.4, 0.0, 20.8, }
+ZDCA BIN: 170 < ZDCA < 190, timing bins = {-21.0, -0.4, 0.0, 0.2, 20.8, }
+ZDCA BIN: 190 < ZDCA < 910, timing bins = {-21.0, -0.6, -0.4, 0.2, 20.8, }
+ZDCA BIN: 910 < ZDCA < 1990, timing bins = {-21.0, -0.4, 0.6, 20.8, }
+-------------------------------RUN = 403281, SR2-------------------------------
+ZDCA BIN: 0 < ZDCA < 150, timing bins = {-21.0, -2.4, 0.0, 20.8, }
+ZDCA BIN: 150 < ZDCA < 180, timing bins = {-21.0, -0.4, 0.0, 0.2, 20.8, }
+ZDCA BIN: 180 < ZDCA < 910, timing bins = {-21.0, -1.4, -0.4, 0.2, 20.8, }
+ZDCA BIN: 910 < ZDCA < 1990, timing bins = {-21.0, -0.4, 20.8, }
+
+
+-------------------------------RUN = 403282, SR1-------------------------------
+ZDCA BIN: 0 < ZDCA < 70, timing bins = {-21.0, 2.0, 2.8, 20.8, }
+ZDCA BIN: 70 < ZDCA < 100, timing bins = {-21.0, 1.2, 1.8, 20.8, }
+ZDCA BIN: 100 < ZDCA < 980, timing bins = {-21.0, 1.2, 1.6, 20.8, }
+ZDCA BIN: 980 < ZDCA < 1990, timing bins = {-21.0, -0.4, 0.8, 1.8, 3.0, 20.8, }
+-------------------------------RUN = 403282, SR2-------------------------------
+ZDCA BIN: 0 < ZDCA < 410, timing bins = {-21.0, 2.0, 2.4, 20.8, }
+ZDCA BIN: 410 < ZDCA < 960, timing bins = {-21.2, -21.0, 20.8, }
+ZDCA BIN: 960 < ZDCA < 970, timing bins = {-21.2, -21.0, 20.8, }
+ZDCA BIN: 970 < ZDCA < 1990, timing bins = {-21.0, -1.6, 0.8, 20.8, }
+
+
+-------------------------------RUN = 403283, SR1-------------------------------
+ZDCA BIN: 0 < ZDCA < 160, timing bins = {-21.0, -1.6, 0.0, 20.8, }
+ZDCA BIN: 160 < ZDCA < 190, timing bins = {-21.0, -1.0, -0.4, 0.0, 20.8, }
+ZDCA BIN: 190 < ZDCA < 920, timing bins = {-21.0, -0.6, -0.4, 0.2, 20.8, }
+ZDCA BIN: 920 < ZDCA < 1990, timing bins = {-21.0, 0.0, 1.0, 20.8, }
+-------------------------------RUN = 403283, SR2-------------------------------
+ZDCA BIN: 0 < ZDCA < 160, timing bins = {-21.0, -1.6, 0.0, 20.8, }
+ZDCA BIN: 160 < ZDCA < 180, timing bins = {-21.0, -0.8, -0.4, 0.0, 20.8, }
+ZDCA BIN: 180 < ZDCA < 240, timing bins = {-21.0, -0.8, -0.4, 0.4, 20.8, }
+ZDCA BIN: 240 < ZDCA < 1990, timing bins = {-21.0, -0.8, -0.4, 0.4, 20.8, }
+
+
+-------------------------------RUN = 403284, SR1-------------------------------
+ZDCA BIN: 0 < ZDCA < 70, timing bins = {-21.0, 1.6, 2.6, 20.8, }
+ZDCA BIN: 70 < ZDCA < 100, timing bins = {-21.0, 1.2, 1.8, 20.8, }
+ZDCA BIN: 100 < ZDCA < 980, timing bins = {-21.0, 1.2, 1.6, 20.8, }
+ZDCA BIN: 980 < ZDCA < 1990, timing bins = {-21.0, 0.2, 1.4, 2.6, 20.8, }
+-------------------------------RUN = 403284, SR2-------------------------------
+ZDCA BIN: 0 < ZDCA < 20, timing bins = {-21.0, 1.2, 1.8, 20.8, }
+ZDCA BIN: 20 < ZDCA < 30, timing bins = {-21.0, 1.4, 1.8, 20.8, }
+ZDCA BIN: 30 < ZDCA < 40, timing bins = {-21.0, 1.4, 1.8, 20.8, }
+ZDCA BIN: 40 < ZDCA < 100, timing bins = {-21.0, 1.2, 1.8, 20.8, }
+ZDCA BIN: 100 < ZDCA < 980, timing bins = {-21.0, 1.0, 1.4, 20.8, }
+ZDCA BIN: 980 < ZDCA < 1990, timing bins = {-21.0, -1.0, 1.4, 20.8, }
+
+
+-------------------------------RUN = 403285, SR1-------------------------------
+ZDCA BIN: 0 < ZDCA < 10, timing bins = {-21.0, -1.6, -1.4, 20.8, }
+ZDCA BIN: 10 < ZDCA < 20, timing bins = {-21.0, -4.4, -1.6, -1.4, 20.8, }
+ZDCA BIN: 20 < ZDCA < 150, timing bins = {-21.0, -1.4, 1.2, 20.8, }
+ZDCA BIN: 150 < ZDCA < 190, timing bins = {-21.0, -1.2, -0.4, 0.2, 20.8, }
+ZDCA BIN: 190 < ZDCA < 260, timing bins = {-21.0, -0.2, 0.2, 20.8, }
+ZDCA BIN: 260 < ZDCA < 1990, timing bins = {-21.0, -0.4, 0.2, 20.8, }
+-------------------------------RUN = 403285, SR2-------------------------------
+ZDCA BIN: 0 < ZDCA < 10, timing bins = {-21.0, -1.6, -1.4, 20.8, }
+ZDCA BIN: 10 < ZDCA < 20, timing bins = {-21.0, -1.6, -1.4, 20.8, }
+ZDCA BIN: 20 < ZDCA < 150, timing bins = {-21.0, -1.4, 1.2, 20.8, }
+ZDCA BIN: 150 < ZDCA < 180, timing bins = {-21.0, -1.0, -0.4, 0.2, 20.8, }
+ZDCA BIN: 180 < ZDCA < 820, timing bins = {-21.0, -0.4, 0.2, 20.8, }
+ZDCA BIN: 820 < ZDCA < 1990, timing bins = {-21.0, -0.2, 20.8, }
+
+
+-------------------------------RUN = 403286, SR1-------------------------------
+ZDCA BIN: 0 < ZDCA < 40, timing bins = {-21.0, 1.6, 2.6, 20.8, }
+ZDCA BIN: 40 < ZDCA < 980, timing bins = {-21.0, 1.8, 2.2, 20.8, }
+ZDCA BIN: 980 < ZDCA < 1990, timing bins = {-21.0, -0.4, 0.6, 3.0, 20.8, }
+-------------------------------RUN = 403286, SR2-------------------------------
+ZDCA BIN: 0 < ZDCA < 410, timing bins = {-21.0, 2.0, 2.4, 20.8, }
+ZDCA BIN: 410 < ZDCA < 980, timing bins = {-21.2, -21.0, 20.8, }
+ZDCA BIN: 980 < ZDCA < 990, timing bins = {-21.0, 1.6, 20.8, }
+ZDCA BIN: 990 < ZDCA < 1990, timing bins = {-21.0, -1.6, 0.6, 20.8, }
+
+
