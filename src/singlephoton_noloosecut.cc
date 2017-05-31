@@ -73,8 +73,14 @@ int main (int argc, char **argv) {
 	TH1F *h_ZDCA_tight = new TH1F("h_ZDCA_tight","h_ZDCA_tight",25,0,2000);
 	TH1F *h_timing_tight = new TH1F("h_timing_tight","h_timing_tight",12,-2,10);
 
+	TH1F *h_ZDCA_loose = new TH1F("h_ZDCA_loose","h_ZDCA_loose",25,0,2000);
+	TH1F *h_timing_loose = new TH1F("h_timing_loose","h_timing_loose",12,-2,10);
+
 	TEfficiency *h_ZDCA_tight_eff = new TEfficiency("h_ZDCA_tight_eff","h_ZDCA_tight_eff",25,0,2000);
 	TEfficiency *h_timing_tight_eff = new TEfficiency("h_timing_tight_eff","h_timing_tight_eff",12,-2,10);
+
+	TEfficiency *h_ZDCA_loose_eff = new TEfficiency("h_ZDCA_loose_eff","h_ZDCA_loose_eff",25,0,2000);
+	TEfficiency *h_timing_loose_eff = new TEfficiency("h_timing_loose_eff","h_timing_loose_eff",12,-2,10);
 
 	TH2F *h_ZDCA_timing = new TH2F("h_ZDCA_timing","h_ZDCA_timing",12,-2,10,25,0,2000);
 	TH2F *h_ZDCA_timing_tight = new TH2F("h_ZDCA_timing_tight","h_ZDCA_timing_tight",12,-2,10,25,0,2000);
@@ -100,8 +106,6 @@ int main (int argc, char **argv) {
 	    double wt =  1; 
 	    if ( p->wt_xs!=0 ) wt = lumi*1000*1000*p->wt_xs*p->wt_ge/p->wt_nEvents ;
 
-	    if (!p->ph_isLoose1) cout << "Non-loose photon" << endl;
-
 		h_CF -> Fill(-0.5,wt);
         if( p->HLT_g140_loose == 1  ) h_CF -> Fill( 0.5, wt);
         if( p->HLT_g140_loose == 1  && p->ph_pt1 > ptcut ) h_CF -> Fill( 1.5, wt);
@@ -109,8 +113,31 @@ int main (int argc, char **argv) {
         if( p->HLT_g140_loose == 1  && p->ph_pt1 > ptcut && p->ph_passIso1 && p->m_met > metcut ) h_CF -> Fill( 3.5, wt);
         if( p->HLT_g140_loose == 1  && p->ph_pt1 > ptcut && p->ph_passIso1 && p->m_met > metcut && fabs(p->ph_eta1) < 1.37 ) h_CF -> Fill( 4.5, wt);
         if( p->HLT_g140_loose == 1  && p->ph_pt1 > ptcut &&                   p->m_met < 20     && fabs(p->ph_eta1) < 1.37 ) h_CF -> Fill( 5.5, wt);
-		if( !p->HLT_g140_loose) continue ;
+
 		if( p->ph_pt1 < ptcut || fabs( p -> ph_eta1 ) > 1.37 ) continue ; 
+
+		//ZDCA/timing plots filled without weights for now -- using them to calculate efficiencies
+		h_ZDCA->Fill(fabs(p->ph_calo_z1 - p->PV_z));
+		h_timing->Fill(p->ph_t1);
+		h_ZDCA_timing->Fill(p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z));
+		if (p->ph_isTight1) {
+			h_ZDCA_tight->Fill(fabs(p->ph_calo_z1 - p->PV_z));
+			h_timing_tight->Fill(p->ph_t1);
+			h_ZDCA_timing_tight->Fill(p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z));
+		}
+		if (p->ph_isLoose1) {
+			h_ZDCA_timing_loose->Fill(p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z));
+			h_ZDCA_loose->Fill(fabs(p->ph_calo_z1 - p->PV_z));
+			h_timing_loose->Fill(p->ph_t1);
+		}
+		h_ZDCA_tight_eff->Fill(p->ph_isTight1,fabs(p->ph_calo_z1 - p->PV_z));
+		h_timing_tight_eff->Fill(p->ph_isTight1,p->ph_t1);
+		h_ZDCA_loose_eff->Fill(p->ph_isLoose1,fabs(p->ph_calo_z1 - p->PV_z));
+		h_timing_loose_eff->Fill(p->ph_isLoose1,p->ph_t1);
+		h_ZDCA_timing_tight_eff->Fill(p->ph_isTight1,p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z));
+		h_ZDCA_timing_loose_eff->Fill(p->ph_isLoose1,p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z));
+
+		if( !p->HLT_g140_loose) continue ;
 
 	    for( int a = 0 ; a < 15 ; a ++ ) {
 			for( int b = 0 ; b < 15 ; b++ ) {
@@ -120,25 +147,9 @@ int main (int argc, char **argv) {
 			}
 		}
 
-		if (p->HLT_g140_loose == 1 && fabs(p->ph_eta1) < 1.37 && p->ph_passIso1) {
+		if (p->ph_passIso1) {
 			h_pt_met->Fill(p->ph_pt1,p->m_met,wt);
 		}
-
-		h_ZDCA->Fill(fabs(p->ph_calo_z1 - p->PV_z),wt);
-		h_timing->Fill(p->ph_t1,wt);
-		h_ZDCA_timing->Fill(p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z),wt);
-		if (p->ph_isTight1) {
-			h_ZDCA_tight->Fill(fabs(p->ph_calo_z1 - p->PV_z),wt);
-			h_timing_tight->Fill(p->ph_t1,wt);
-			h_ZDCA_timing_tight->Fill(p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z),wt);
-		}
-		if (p->ph_isLoose1) h_ZDCA_timing_loose->Fill(p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z),wt);
-		h_ZDCA_tight_eff->Fill(p->ph_isTight1,wt,fabs(p->ph_calo_z1 - p->PV_z));
-		h_timing_tight_eff->Fill(p->ph_isTight1,wt,p->ph_t1);
-		h_ZDCA_timing_tight_eff->Fill(p->ph_isTight1,p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z));
-		h_ZDCA_timing_loose_eff->Fill(p->ph_isLoose1,p->ph_t1,fabs(p->ph_calo_z1 - p->PV_z));
-
-	    if( p->ph_pt1< ptcut) continue ;
 
         for( int k = 0 ; k < 6 ; k ++ ) {
 			if( fabs( p->ph_calo_z1 - p->PV_z)  > z[k] &&  fabs( p->ph_calo_z1 - p->PV_z) < z[k+1] ) { 
@@ -223,8 +234,12 @@ int main (int argc, char **argv) {
 	h_timing->Write();
 	h_ZDCA_tight->Write();
 	h_timing_tight->Write();
+	h_ZDCA_loose->Write();
+	h_timing_loose->Write();
 	h_ZDCA_tight_eff->Write();
 	h_timing_tight_eff->Write();
+	h_ZDCA_loose_eff->Write();
+	h_timing_loose_eff->Write();
 	h_ZDCA_timing->Write();
 	h_ZDCA_timing_tight->Write();
 	h_ZDCA_timing_loose->Write();

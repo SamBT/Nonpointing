@@ -69,23 +69,43 @@ int main (int argc, char **argv) {
 
 	TH2F *h_pt_met = new TH2F("h_pt_met","h_pt_met",200,0,2000,200,0,2000);
 
-	TH1F *h_ZDCA = new TH1F("h_ZDCA","h_ZDCA",25,0,2000);
+	double new_bins[] = {0,20,40,60,80,100,120,140,160,180,200,800,1400,2000};
+	int len = sizeof(new_bins)/sizeof(*new_bins);
+
+	TH1F *h_ZDCA = new TH1F("h_ZDCA","h_ZDCA",len-1,0,len-1);
 	TH1F *h_timing = new TH1F("h_timing","h_timing",12,-2,10);
 
-	TH1F *h_ZDCA_tight = new TH1F("h_ZDCA_tight","h_ZDCA_tight",25,0,2000);
+	TH1F *h_ZDCA_tight = new TH1F("h_ZDCA_tight","h_ZDCA_tight",len-1,0,len-1);
 	TH1F *h_timing_tight = new TH1F("h_timing_tight","h_timing_tight",12,-2,10);
 
-	TEfficiency *h_ZDCA_tight_eff = new TEfficiency("h_ZDCA_tight_eff","h_ZDCA_tight_eff",25,0,2000);
+	TH1F *h_ZDCA_loose = new TH1F("h_ZDCA_loose","h_ZDCA_loose",len-1,0,len-1);
+	TH1F *h_timing_loose = new TH1F("h_timing_loose","h_timing_loose",12,-2,10);
+
+	TEfficiency *h_ZDCA_tight_eff = new TEfficiency("h_ZDCA_tight_eff","h_ZDCA_tight_eff",len-1,0,len-1);
 	TEfficiency *h_timing_tight_eff = new TEfficiency("h_timing_tight_eff","h_timing_tight_eff",12,-2,10);
+
+	TEfficiency *h_ZDCA_loose_eff = new TEfficiency("h_ZDCA_loose_eff","h_ZDCA_loose_eff",len-1,0,len-1);
+	TEfficiency *h_timing_loose_eff = new TEfficiency("h_timing_loose_eff","h_timing_loose_eff",12,-2,10);
 
 	TH2F *h_ZDCA_timing = new TH2F("h_ZDCA_timing","h_ZDCA_timing",12,-2,10,25,0,2000);
 	TH2F *h_ZDCA_timing_tight = new TH2F("h_ZDCA_timing_tight","h_ZDCA_timing_tight",12,-2,10,25,0,2000);
+	TH2F *h_ZDCA_timing_loose = new TH2F("h_ZDCA_timing_loose","h_ZDCA_timing_loose",12,-2,10,25,0,2000);
 
-	TEfficiency *h_ZDCA_timing_eff = new TEfficiency("h_ZDCA_timing_eff","h_ZDCA_timing_eff",12,-2,10,25,0,2000);
+	TEfficiency *h_ZDCA_timing_tight_eff = new TEfficiency("h_ZDCA_timing_tight_eff","h_ZDCA_timing_tight_eff",12,-2,10,25,0,2000);
+	TEfficiency *h_ZDCA_timing_loose_eff = new TEfficiency("h_ZDCA_timing_loose_eff","h_ZDCA_timing_loose_eff",12,-2,10,25,0,2000);
 
-	h_ZDCA_tight_eff->SetUseWeightedEvents();
-	h_timing_tight_eff->SetUseWeightedEvents();
-	h_ZDCA_timing_eff->SetUseWeightedEvents();
+	TH1F *h_ZDCA_fine = new TH1F("h_ZDCA_fine","h_ZDCA_fine",100,0,1000);
+	TH1F *h_ZDCA_tight_fine = new TH1F("h_ZDCA_tight_fine","h_ZDCA_tight_fine",100,0,1000);
+	TH1F *h_ZDCA_loose_fine = new TH1F("h_ZDCA_loose_fine","h_ZDCA_loose_fine",100,0,1000);
+	TEfficiency *h_ZDCA_tight_eff_fine = new TEfficiency("h_ZDCA_tight_eff_fine","h_ZDCA_tight_eff_fine",100,0,1000);
+	TEfficiency *h_ZDCA_loose_eff_fine = new TEfficiency("h_ZDCA_loose_eff_fine","h_ZDCA_loose_eff_fine",100,0,1000);
+
+	TH1F *h_pt1_pass_trigger = new TH1F("h_pt1_pass_trigger","h_pt1_pass_trigger",2000,0,2000);
+	TEfficiency *h_pt1_trigger_eff = new TEfficiency("h_pt1_trigger_eff","h_pt1_trigger_eff",2000,0,2000);
+	TH1F *h_pt2_pass_trigger = new TH1F("h_pt2_pass_trigger","h_pt2_pass_trigger",2000,0,2000);
+	TEfficiency *h_pt2_trigger_eff = new TEfficiency("h_pt2_trigger_eff","h_pt2_trigger_eff",2000,0,2000);
+	TEfficiency *h_pt1_trigger_eff_pt2_50 = new TEfficiency("h_pt1_trigger_eff_pt2_50","h_pt1_trigger_eff_pt2_50",2000,0,2000);
+	TEfficiency *h_pt2_trigger_eff_pt1_50 = new TEfficiency("h_pt2_trigger_eff_pt1_50","h_pt2_trigger_eff_pt1_50",2000,0,2000);
 
 	double z[7] = { 0, 40 , 80 , 120 , 160 , 200 , 90000};
 	double t[7] = { -4, 0.5 , 1.1, 1.3, 1.5, 1.8, 90000};
@@ -111,11 +131,160 @@ int main (int argc, char **argv) {
         	h_pt_met->Fill(test_pt,p->m_met,wt);
         }
 
-	    if(!p->HLT_g35_loose_g25_loose) continue ;
+        double dZsigned  =  p->ph_calo_z1 - p->PV_z ; 
+
+	    double timing = p->ph_t1 ;
+	    double caloZ = p->ph_calo_z1 ;
+	    double phi = p->ph_phi1;
+	    double eta = p->ph_eta1;
+	    double pt = p->ph_pt1;
+	    int tight = p->ph_isTight1;
+	    int loose = p->ph_isLoose1;
+	    int which_photon;
+	    double dZbin1 = -1;
+	    double dZbin2 = -1;
+	    double dZ1 = fabs(p->ph_calo_z1 - p->PV_z);
+	    double dZ2 = fabs(p->ph_calo_z2 - p->PV_z);
+	    double t1 = p->ph_t1;
+	    double t2 = p->ph_t2;
+	    int tight1 = p->ph_isTight1;
+	    int tight2 = p->ph_isTight2;
+	    int loose1 = p->ph_isLoose1;
+	    int loose2 = p->ph_isLoose2;
+
+
+	    if( fabs(p->ph_eta1) <= 1.37 && fabs(p->ph_eta2) <= 1.37  ) {
+			dZsigned = p->ph_t1 > p->ph_t2 ?  ( p->ph_calo_z1 - p->PV_z) :  ( p->ph_calo_z2 - p->PV_z) ;
+			timing =  p->ph_t1 > p->ph_t2 ? p->ph_t1 : p->ph_t2 ;
+			caloZ =  p->ph_t1 > p->ph_t2 ? p->ph_calo_z1 : p->ph_calo_z2 ;
+			tight = p->ph_t1 > p->ph_t2 ? p->ph_isTight1 : p->ph_isTight2;
+			loose = p->ph_t1 > p->ph_t2 ? p->ph_isLoose1 : p->ph_isLoose2;
+			eta = p->ph_t1 > p->ph_t2 ? p->ph_eta1 : p->ph_eta2;
+			phi = p->ph_t1 > p->ph_t2 ? p->ph_phi1 : p->ph_phi2;
+			pt = p->ph_t1 > p->ph_t2 ? p->ph_pt1 : p->ph_pt2;
+			which_photon = p->ph_t1 > p->ph_t2 ? 1 : 2;
+		}
+		else if ( fabs(p->ph_eta1) > 1.37 && fabs(p->ph_eta2) < 1.37  ) {
+			dZsigned  = ( p->ph_calo_z2 - p->PV_z);
+			timing = p->ph_t2 ;
+			caloZ = p->ph_calo_z2 ;
+			tight = p->ph_isTight2;
+			eta = p->ph_eta2;
+			phi = p->ph_phi2;
+			pt = p->ph_pt2;
+			which_photon = 2;
+		}
+
+		double dZ = fabs(dZsigned);
+
+		//Trigger efficiency plots
+		bool eta12 = fabs(p->ph_eta1) < 1.37 || fabs(p->ph_eta2) < 1.37;
+		if (p->ph_passIso1 && p->ph_passIso2 && eta12) {
+			for (int m = 1; m <= h_pt1_pass_trigger->GetNbinsX(); m++) {
+	        	if (p->ph_pt1 >= (m-1)*(2000/h_pt1_pass_trigger->GetNbinsX())) {
+					if (p->HLT_g35_loose_g25_loose) h_pt1_pass_trigger->AddBinContent(m);
+					h_pt1_trigger_eff->Fill(p->HLT_g35_loose_g25_loose,(m-1)*(2000/h_pt1_pass_trigger->GetNbinsX()));
+				}
+				if (p->ph_pt1 > 5000 && p->ph_pt2 >= (m-1)*(2000/h_pt2_pass_trigger->GetNbinsX())) {
+					if (p->HLT_g35_loose_g25_loose) h_pt2_pass_trigger->AddBinContent(m);
+					h_pt2_trigger_eff->Fill(p->HLT_g35_loose_g25_loose,(m-1)*(2000/h_pt2_pass_trigger->GetNbinsX()));
+				}
+			}
+		}
+
+		if( fabs(p->ph_eta1) > 1.37 && fabs(p->ph_eta2) > 1.37 ) continue ;
 
 	    if( p->ph_pt2 < ptcut ) continue ; 
 
-    	if( fabs(p->ph_eta1) > 1.37 && fabs(p->ph_eta2) > 1.37 ) continue ;
+    	double pi = 3.14159;
+
+    	double deta11 = p->ph_eta1 - p->truth_ph_eta1;
+    	double deta12 = p->ph_eta1 - p->truth_ph_eta2;
+    	double deta21 = p->ph_eta2 - p->truth_ph_eta1;
+    	double deta22 = p->ph_eta2 - p->truth_ph_eta2;
+
+    	double dphi11 = p->ph_phi1 - p->truth_ph_phi1;
+    	double dphi12 = p->ph_phi1 - p->truth_ph_phi2;
+    	double dphi21 = p->ph_phi2 - p->truth_ph_phi1;
+    	double dphi22 = p->ph_phi2 - p->truth_ph_phi2;
+
+    	if (dphi11 > pi) dphi11 = 2*pi - dphi11;
+    	if (dphi12 > pi) dphi12 = 2*pi - dphi12;
+    	if (dphi21 > pi) dphi21 = 2*pi - dphi21;
+    	if (dphi22 > pi) dphi22 = 2*pi - dphi22;
+
+    	double dR11 = sqrt(pow(deta11,2) + pow(dphi11,2));
+    	double dR12 = sqrt(pow(deta12,2) + pow(dphi12,2));
+    	double dR21 = sqrt(pow(deta21,2) + pow(dphi21,2));
+    	double dR22 = sqrt(pow(deta22,2) + pow(dphi22,2));
+
+    	for (int k = 0; k < len-1; k++) {
+    		if (dZ1 > new_bins[k] && dZ1 < new_bins[k+1]) dZbin1 = k+0.5;
+    		if (dZ2 > new_bins[k] && dZ2 < new_bins[k+1]) dZbin2 = k+0.5;
+    	}
+
+
+    	//ZDCA/timing plots filled without weights for now -- using them for efficiency plots, fill efficienceies with
+    	//reco photons matched to truth level photons by a dR < 0.1 matching
+    	h_CF->Fill(7.5);
+    	h_CF->Fill(7.5); //Filling twice, once for each photon (want the total number of photons)
+    	if (dR11 < 0.1 || dR12 < 0.1) {
+    		h_CF->Fill(6.5);
+    		h_ZDCA->Fill(dZbin1);
+    		h_ZDCA_fine->Fill(dZ1);
+			h_timing->Fill(t1);
+			h_ZDCA_timing->Fill(t1,dZ1);
+			if (tight1) {
+				h_ZDCA_tight->Fill(dZbin1);
+				h_ZDCA_tight_fine->Fill(dZ1);
+				h_timing_tight->Fill(t1);
+				h_ZDCA_timing_tight->Fill(t1,dZ1);
+			}
+			if (loose1) {
+				h_ZDCA_timing_loose->Fill(t1,dZ1);
+				h_ZDCA_loose->Fill(dZbin1);
+				h_ZDCA_loose_fine->Fill(dZ1);
+				h_timing_loose->Fill(t1);
+			}
+			if (loose1) h_ZDCA_tight_eff->Fill(tight1,dZbin1);
+			if (loose1) h_timing_tight_eff->Fill(tight1,t1);
+			if (loose1) h_ZDCA_tight_eff_fine->Fill(tight1,dZ1);
+			h_ZDCA_loose_eff->Fill(loose1,dZbin1);
+			h_ZDCA_loose_eff_fine->Fill(loose1,dZ1);
+			h_timing_loose_eff->Fill(loose1,t1);
+			if (loose1) h_ZDCA_timing_tight_eff->Fill(tight1,t1,dZ1);
+			h_ZDCA_timing_loose_eff->Fill(loose1,t1,dZ1);
+		}
+
+		if (dR21 < 0.1 || dR22 < 0.1) {
+    		h_CF->Fill(6.5);
+    		h_ZDCA->Fill(dZbin2);
+    		h_ZDCA_fine->Fill(dZ2);
+			h_timing->Fill(t2);
+			h_ZDCA_timing->Fill(t2,dZ2);
+			if (tight2) {
+				h_ZDCA_tight->Fill(dZbin2);
+				h_ZDCA_tight_fine->Fill(dZ2);
+				h_timing_tight->Fill(t2);
+				h_ZDCA_timing_tight->Fill(t2,dZ2);
+			}
+			if (loose2) {
+				h_ZDCA_timing_loose->Fill(t2,dZ2);
+				h_ZDCA_loose->Fill(dZbin2);
+				h_ZDCA_loose_fine->Fill(dZ2);
+				h_timing_loose->Fill(t2);
+			}
+			if (loose2) h_ZDCA_tight_eff->Fill(tight2,dZbin2);
+			if (loose2) h_timing_tight_eff->Fill(tight2,t2);
+			if (loose2) h_ZDCA_tight_eff_fine->Fill(tight2,dZ2);
+			h_ZDCA_loose_eff->Fill(loose2,dZbin2);
+			h_ZDCA_loose_eff_fine->Fill(loose2,dZ2);
+			h_timing_loose_eff->Fill(loose2,t2);
+			if (loose2) h_ZDCA_timing_tight_eff->Fill(tight2,t2,dZ2);
+			h_ZDCA_timing_loose_eff->Fill(loose2,t2,dZ2);
+		}
+
+		if(!p->HLT_g35_loose_g25_loose) continue ;
 
 	    for( int a = 0 ; a < 15 ; a ++ ) {
 			for( int b = 0 ; b < 15 ; b++ ) {
@@ -124,41 +293,6 @@ int main (int argc, char **argv) {
 			    if(p->ph_pt1>pTcut && p->m_met>METcut) h_N->Fill(a+0.5,b+0.5,wt);
 			}
 		}
-
-
-	    double dZsigned  =  p->ph_calo_z1 - p->PV_z ; 
-
-	    double timing = p->ph_t1 ;
-	    double caloZ = p->ph_calo_z1 ;
-	    int tight = -1;
-
-
-	    if( fabs(p->ph_eta1) <= 1.37 && fabs(p->ph_eta2) <= 1.37  ) {
-			dZsigned = p->ph_t1 > p->ph_t2 ?  ( p->ph_calo_z1 - p->PV_z) :  ( p->ph_calo_z2 - p->PV_z) ;
-			timing =  p->ph_t1 > p->ph_t2 ? p->ph_t1 : p->ph_t2 ;
-			caloZ =  p->ph_t1 > p->ph_t2 ? p->ph_calo_z1 : p->ph_calo_z2 ;
-			tight = p->ph_t1 > p->ph_t2 ? p->ph_isTight1 : p->ph_isTight2;
-		}
-		else if ( fabs(p->ph_eta1) > 1.37 && fabs(p->ph_eta2) < 1.37  ) {
-			dZsigned  = ( p->ph_calo_z2 - p->PV_z);
-			timing = p->ph_t2 ;
-			caloZ = p->ph_calo_z2 ;
-			tight = p->ph_isTight2;
-		}
-
-		double dZ = fabs(dZsigned);
-
-		h_ZDCA->Fill(dZ,wt);
-		h_timing->Fill(timing,wt);
-		h_ZDCA_timing->Fill(timing,dZ,wt);
-		if (tight) {
-			h_ZDCA_tight->Fill(dZ,wt);
-			h_timing_tight->Fill(timing,wt);
-			h_ZDCA_timing_tight->Fill(timing,dZ,wt);
-		}
-		h_ZDCA_tight_eff->Fill(tight,dZ);
-		h_timing_tight_eff->Fill(tight,timing);
-		h_ZDCA_timing_eff->Fill(tight,timing,dZ);
 
         for( int k = 0 ; k < 6 ; k ++ ) {
 			if( dZ  > z[k] &&  dZ < z[k+1] ) { 
@@ -241,14 +375,29 @@ int main (int argc, char **argv) {
 	h_yield_raw->Write();
 	h_pt_met->Write();
 	h_ZDCA->Write();
+	h_ZDCA_fine->Write();
 	h_timing->Write();
 	h_ZDCA_tight->Write();
+	h_ZDCA_tight_fine->Write();
 	h_timing_tight->Write();
+	h_ZDCA_loose->Write();
+	h_ZDCA_loose_fine->Write();
+	h_timing_loose->Write();
 	h_ZDCA_tight_eff->Write();
+	h_ZDCA_tight_eff_fine->Write();
 	h_timing_tight_eff->Write();
+	h_ZDCA_loose_eff->Write();
+	h_ZDCA_loose_eff_fine->Write();
+	h_timing_loose_eff->Write();
 	h_ZDCA_timing->Write();
 	h_ZDCA_timing_tight->Write();
-	h_ZDCA_timing_eff->Write();
+	h_ZDCA_timing_loose->Write();
+	h_ZDCA_timing_tight_eff->Write();
+	h_ZDCA_timing_loose_eff->Write();
+	h_pt1_pass_trigger->Write();
+	h_pt1_trigger_eff->Write();
+	h_pt2_pass_trigger->Write();
+	h_pt2_trigger_eff->Write();
     f.Close();
 
 	return 0 ;

@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Tue May 23 11:43:51 2017 by ROOT version 6.04/14
+// Wed May 24 14:43:56 2017 by ROOT version 6.04/14
 // from TTree output/output
-// found on file: 403280.root
+// found on file: 403282.root
 //////////////////////////////////////////////////////////
 
 #ifndef output_h
@@ -31,6 +31,14 @@ public :
    Double_t        m_met;
    Double_t        m_weight;
    Double_t        m_sumet;
+   Double_t        truth_ph_pt1;
+   Double_t        truth_ph_eta1;
+   Double_t        truth_ph_phi1;
+   Double_t        truth_ph_e1;
+   Double_t        truth_ph_pt2;
+   Double_t        truth_ph_eta2;
+   Double_t        truth_ph_phi2;
+   Double_t        truth_ph_e2;
    Int_t           n_ph;
    Double_t        ph_t1;
    Double_t        ph_t2;
@@ -122,6 +130,14 @@ public :
    TBranch        *b_m_met;   //!
    TBranch        *b_m_weight;   //!
    TBranch        *b_m_sumet;   //!
+   TBranch        *b_truth_ph_pt1;   //!
+   TBranch        *b_truth_ph_eta1;   //!
+   TBranch        *b_truth_ph_phi1;   //!
+   TBranch        *b_truth_ph_e1;   //!
+   TBranch        *b_truth_ph_pt2;   //!
+   TBranch        *b_truth_ph_eta2;   //!
+   TBranch        *b_truth_ph_phi2;   //!
+   TBranch        *b_truth_ph_e2;   //!
    TBranch        *b_n_ph;   //!
    TBranch        *b_ph_t1;   //!
    TBranch        *b_ph_t2;   //!
@@ -224,9 +240,9 @@ output::output(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("403280.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("403282.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("403280.root");
+         f = new TFile("403282.root");
       }
       f->GetObject("output",tree);
 
@@ -282,6 +298,14 @@ void output::Init(TTree *tree)
    fChain->SetBranchAddress("m_met", &m_met, &b_m_met);
    fChain->SetBranchAddress("m_weight", &m_weight, &b_m_weight);
    fChain->SetBranchAddress("m_sumet", &m_sumet, &b_m_sumet);
+   fChain->SetBranchAddress("truth_ph_pt1", &truth_ph_pt1, &b_truth_ph_pt1);
+   fChain->SetBranchAddress("truth_ph_eta1", &truth_ph_eta1, &b_truth_ph_eta1);
+   fChain->SetBranchAddress("truth_ph_phi1", &truth_ph_phi1, &b_truth_ph_phi1);
+   fChain->SetBranchAddress("truth_ph_e1", &truth_ph_e1, &b_truth_ph_e1);
+   fChain->SetBranchAddress("truth_ph_pt2", &truth_ph_pt2, &b_truth_ph_pt2);
+   fChain->SetBranchAddress("truth_ph_eta2", &truth_ph_eta2, &b_truth_ph_eta2);
+   fChain->SetBranchAddress("truth_ph_phi2", &truth_ph_phi2, &b_truth_ph_phi2);
+   fChain->SetBranchAddress("truth_ph_e2", &truth_ph_e2, &b_truth_ph_e2);
    fChain->SetBranchAddress("n_ph", &n_ph, &b_n_ph);
    fChain->SetBranchAddress("ph_t1", &ph_t1, &b_ph_t1);
    fChain->SetBranchAddress("ph_t2", &ph_t2, &b_ph_t2);

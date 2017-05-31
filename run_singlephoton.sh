@@ -1,7 +1,14 @@
 #!/bin/bash
 
-./bin/singlephoton 150 75 singlephoton_files/data.root
-mv output.root analysis_output/singlephoton/data/output_data.root
+#pass integer 1 to run everything
+#pass integer 0 to just run signal
+argt=$1
+
+if [ "$type" == "1" ] 
+    then 
+        ./bin/singlephoton 150 75 singlephoton_files/data.root
+	mv output.root analysis_output/singlephoton/data/output_data.root
+fi
 ./bin/singlephoton 150 75 singlephoton_files/EXOT6_403280.root
 mv output.root analysis_output/singlephoton/signal/403280.root
 ./bin/singlephoton 150 75 singlephoton_files/EXOT6_403281.root

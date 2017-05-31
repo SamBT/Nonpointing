@@ -75,8 +75,14 @@ int main (int argc, char **argv) {
 	TH1F *h_ZDCA_tight = new TH1F("h_ZDCA_tight","h_ZDCA_tight",25,0,2000);
 	TH1F *h_timing_tight = new TH1F("h_timing_tight","h_timing_tight",12,-2,10);
 
+	TH1F *h_ZDCA_loose = new TH1F("h_ZDCA_loose","h_ZDCA_loose",25,0,2000);
+	TH1F *h_timing_loose = new TH1F("h_timing_loose","h_timing_loose",12,-2,10);
+
 	TEfficiency *h_ZDCA_tight_eff = new TEfficiency("h_ZDCA_tight_eff","h_ZDCA_tight_eff",25,0,2000);
 	TEfficiency *h_timing_tight_eff = new TEfficiency("h_timing_tight_eff","h_timing_tight_eff",12,-2,10);
+
+	TEfficiency *h_ZDCA_loose_eff = new TEfficiency("h_ZDCA_loose_eff","h_ZDCA_loose_eff",25,0,2000);
+	TEfficiency *h_timing_loose_eff = new TEfficiency("h_timing_loose_eff","h_timing_loose_eff",12,-2,10);
 
 	TH2F *h_ZDCA_timing = new TH2F("h_ZDCA_timing","h_ZDCA_timing",12,-2,10,25,0,2000);
 	TH2F *h_ZDCA_timing_tight = new TH2F("h_ZDCA_timing_tight","h_ZDCA_timing_tight",12,-2,10,25,0,2000);
@@ -115,27 +121,12 @@ int main (int argc, char **argv) {
         	h_pt_met->Fill(test_pt,p->m_met,wt);
         }
 
-	    if(!p->HLT_g35_loose_g25_loose) continue ;
-
-	    if( p->ph_pt2 < ptcut ) continue ; 
-
-    	if( fabs(p->ph_eta1) > 1.37 && fabs(p->ph_eta2) > 1.37 ) continue ;
-
-	    for( int a = 0 ; a < 15 ; a ++ ) {
-			for( int b = 0 ; b < 15 ; b++ ) {
-			    double pTcut = 40 + 10*a;
-			    double METcut = 70 + 10*b ;
-			    if(p->ph_pt1>pTcut && p->m_met>METcut) h_N->Fill(a+0.5,b+0.5,wt);
-			}
-		}
-
-
-	    double dZsigned  =  p->ph_calo_z1 - p->PV_z ; 
+        double dZsigned  =  p->ph_calo_z1 - p->PV_z ; 
 
 	    double timing = p->ph_t1 ;
 	    double caloZ = p->ph_calo_z1 ;
-	    int loose = 0;
-	    int tight = 0;
+	    int loose = p->ph_isLoose1;
+	    int tight = p->ph_isTight1;
 
 
 	    if( fabs(p->ph_eta1) <= 1.37 && fabs(p->ph_eta2) <= 1.37  ) {
@@ -155,19 +146,41 @@ int main (int argc, char **argv) {
 
 		double dZ = fabs(dZsigned);
 
-		h_ZDCA->Fill(dZ,wt);
-		h_timing->Fill(timing,wt);
-		h_ZDCA_timing->Fill(timing,dZ,wt);
+	    if( p->ph_pt2 < ptcut ) continue ; 
+
+    	if( fabs(p->ph_eta1) > 1.37 && fabs(p->ph_eta2) > 1.37 ) continue ;
+		
+		//ZDCA/timing plots filled without weights for now -- using them for efficiency plots
+		h_ZDCA->Fill(dZ);
+		h_timing->Fill(timing);
+		h_ZDCA_timing->Fill(timing,dZ);
 		if (tight) {
-			h_ZDCA_tight->Fill(dZ,wt);
-			h_timing_tight->Fill(timing,wt);
-			h_ZDCA_timing_tight->Fill(timing,dZ,wt);
+			h_ZDCA_tight->Fill(dZ);
+			h_timing_tight->Fill(timing);
+			h_ZDCA_timing_tight->Fill(timing,dZ);
 		}
-		if (loose) h_ZDCA_timing_loose->Fill(timing,dZ,wt);
+		if (loose) {
+			h_ZDCA_timing_loose->Fill(timing,dZ);
+			h_ZDCA_loose->Fill(dZ);
+			h_timing_loose->Fill(timing);
+		}
 		h_ZDCA_tight_eff->Fill(tight,dZ);
 		h_timing_tight_eff->Fill(tight,timing);
+		h_ZDCA_loose_eff->Fill(loose,dZ);
+		h_timing_loose_eff->Fill(loose,timing);
 		h_ZDCA_timing_tight_eff->Fill(tight,timing,dZ);
 		h_ZDCA_timing_loose_eff->Fill(loose,timing,dZ);
+
+		if(!p->HLT_g35_loose_g25_loose) continue ;
+
+	    for( int a = 0 ; a < 15 ; a ++ ) {
+			for( int b = 0 ; b < 15 ; b++ ) {
+			    double pTcut = 40 + 10*a;
+			    double METcut = 70 + 10*b ;
+			    if(p->ph_pt1>pTcut && p->m_met>METcut) h_N->Fill(a+0.5,b+0.5,wt);
+			}
+		}
+
 
         for( int k = 0 ; k < 6 ; k ++ ) {
 			if( dZ  > z[k] &&  dZ < z[k+1] ) { 
@@ -253,8 +266,12 @@ int main (int argc, char **argv) {
 	h_timing->Write();
 	h_ZDCA_tight->Write();
 	h_timing_tight->Write();
+	h_ZDCA_loose->Write();
+	h_timing_loose->Write();
 	h_ZDCA_tight_eff->Write();
 	h_timing_tight_eff->Write();
+	h_ZDCA_loose_eff->Write();
+	h_timing_loose_eff->Write();
 	h_ZDCA_timing->Write();
 	h_ZDCA_timing_tight->Write();
 	h_ZDCA_timing_loose->Write();
