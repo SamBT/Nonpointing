@@ -47,10 +47,11 @@ void plot(TString type, TString var) {
 	eff->Add(*eff7);
 
 	ht->GetYaxis()->SetTitle("Efficiency");
-	ht->GetXaxis()->SetTitle("Lower p_{T} Threshold");
+	if (var == "pt1") ht->GetXaxis()->SetTitle("Lower p_{T1} Threshold");
+	if (var == "pt2") ht->GetXaxis()->SetTitle("Lower p_{T2} Threshold");
 	if (var == "pt1") ht->GetXaxis()->SetRangeUser(0,80);
 	if (var == "pt2") ht->GetXaxis()->SetRangeUser(0,80);
-	if (var == "pt2") ht->GetYaxis()->SetRangeUser(0.992,0.996);
+	if (var == "pt2") ht->GetYaxis()->SetRangeUser(0.99,1);
 	if (var == "pt1") ht->GetYaxis()->SetRangeUser(0.41,0.44);
 	ht->SetLineColor(0);
 	ht->SetMarkerColor(0);

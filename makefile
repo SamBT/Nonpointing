@@ -60,10 +60,13 @@ GARBAGE      = $(CXXOBJS) libana.so *~ lib/*.so lib/*.o ./*/*.o
 analysis : analysis.o output.o
 signal_analysis : signal_analysis.o output.o
 diphoton : diphoton.o output.o
+diphoton_truth : diphoton_truth.o BH.o
+singlephoton_truth : singlephoton_truth.o BH.o
 singlephoton : singlephoton.o output.o
 diphoton_noloosecut : diphoton_noloosecut.o output.o
 singlephoton_noloosecut : singlephoton_noloosecut.o output.o
-
+combined_truth : combined_truth.o BH.o
+combined : combined.o output.o
 ############################################################################
 # General rules. The first two need not be specified due to implicit rules, 
 # but redefined for the "echo"

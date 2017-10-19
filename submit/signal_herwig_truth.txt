@@ -1,0 +1,7 @@
+/project/projectdirs/atlas/sambt/nonpointing_truth_signal/herwig_signal_truth/ntuple_403280.root
+/project/projectdirs/atlas/sambt/nonpointing_truth_signal/herwig_signal_truth/ntuple_403281.root
+/project/projectdirs/atlas/sambt/nonpointing_truth_signal/herwig_signal_truth/ntuple_403282.root
+/project/projectdirs/atlas/sambt/nonpointing_truth_signal/herwig_signal_truth/ntuple_403283.root
+/project/projectdirs/atlas/sambt/nonpointing_truth_signal/herwig_signal_truth/ntuple_403284.root
+/project/projectdirs/atlas/sambt/nonpointing_truth_signal/herwig_signal_truth/ntuple_403285.root
+/project/projectdirs/atlas/sambt/nonpointing_truth_signal/herwig_signal_truth/ntuple_403286.root

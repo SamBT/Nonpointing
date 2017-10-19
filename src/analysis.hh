@@ -63,3 +63,12 @@ double significance( double s , double b)
   return sqrt(2*((s+b)*log(1+s/b)-s));
   // see eq 97 of  https://arxiv.org/pdf/1007.1727v3.pdf
 }
+
+double delta_R(double eta1, double phi1, double eta2, double phi2) {
+  double delta_eta = eta1 - eta2;
+  double delta_phi = phi1 - phi2;
+  double pi = 3.14159;
+  if (delta_phi > pi) delta_phi = 2*pi - delta_phi;
+  double dR = sqrt(pow(delta_eta,2) + pow(delta_phi,2));
+  return dR;
+}

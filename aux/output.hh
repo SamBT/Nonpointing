@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Wed May 24 14:43:56 2017 by ROOT version 6.04/14
+// Tue Sep 26 23:10:58 2017 by ROOT version 6.10/04
 // from TTree output/output
-// found on file: 403282.root
+// found on file: /projecta/projectdirs/atlas/atlaslocalgroupdisk/rucio/user/hwang43/ab/84/user.hwang43.11725630._000010.hist-output.root
 //////////////////////////////////////////////////////////
 
 #ifndef output_h
@@ -240,9 +240,9 @@ output::output(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("403282.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("/projecta/projectdirs/atlas/atlaslocalgroupdisk/rucio/user/hwang43/ab/84/user.hwang43.11725630._000010.hist-output.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("403282.root");
+         f = new TFile("/projecta/projectdirs/atlas/atlaslocalgroupdisk/rucio/user/hwang43/ab/84/user.hwang43.11725630._000010.hist-output.root");
       }
       f->GetObject("output",tree);
 

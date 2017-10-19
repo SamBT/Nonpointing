@@ -8,17 +8,31 @@ h1->GetYaxis()->SetTitleOffset(0.81);
 
 //For ratio plots
 
-h1_clone->GetXaxis()->SetTitle("Title");
-h1_clone->GetYaxis()->SetRangeUser(0.,2.0);
-h1_clone->GetYaxis()->SetTitle("A/B");
-h1_clone->GetYaxis()->SetNdivisions(8);
+ratio->GetYaxis()->SetRangeUser(0,0.5);	
+ratio->GetYaxis()->SetTitle("2015/2016");
+ratio->GetYaxis()->SetNdivisions(8);
+ratio->GetXaxis()->SetLabelOffset(0.015);
+ratio->GetXaxis()->SetTitleSize(0.125);
+ratio->GetXaxis()->SetTitleOffset(1.15);
+ratio->GetYaxis()->SetLabelSize(0.1);
+ratio->GetYaxis()->SetLabelOffset(0.01);
+ratio->GetYaxis()->SetTitleSize(0.12);
+ratio->GetYaxis()->SetTitleOffset(0.25);
 
-h1_clone->GetXaxis()->SetLabelSize(0.15);
-h1_clone->GetXaxis()->SetLabelOffset(0.015);
-h1_clone->GetXaxis()->SetTitleSize(0.125);
-h1_clone->GetXaxis()->SetTitleOffset(1.15);
+TCanvas *c1 = new TCanvas();
+c1->Divide(1,2);
+c1->SetBottomMargin(0.2);
+c1->cd(1);
+c1->GetPad(1)->SetLogy();
+c1->GetPad(1)->SetPad(0.,0.25,1.,1);
 
-h1_clone->GetYaxis()->SetLabelSize(0.1);
-h1_clone->GetYaxis()->SetLabelOffset(0.01);
-h1_clone->GetYaxis()->SetTitleSize(0.18);
-h1_clone->GetYaxis()->SetTitleOffset(0.35);
+c1->cd(2);
+c1->GetPad(2)->SetPad(0.,0.05,1,0.365);
+c1->GetPad(2)->SetBottomMargin(0.3);
+c1->GetPad(2)->SetGridy(1);
+
+//For legends
+leg.SetLineColor(0);
+leg.SetFillStyle(0);	
+leg.SetTextSize(0.04);
+leg.SetShadowColor(0);

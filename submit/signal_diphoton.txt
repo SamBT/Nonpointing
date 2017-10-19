@@ -1,0 +1,7 @@
+/global/homes/s/sambt/workarea/nonpointing/diphoton_files/403280.root
+/global/homes/s/sambt/workarea/nonpointing/diphoton_files/403281.root
+/global/homes/s/sambt/workarea/nonpointing/diphoton_files/403282.root
+/global/homes/s/sambt/workarea/nonpointing/diphoton_files/403283.root
+/global/homes/s/sambt/workarea/nonpointing/diphoton_files/403284.root
+/global/homes/s/sambt/workarea/nonpointing/diphoton_files/403285.root
+/global/homes/s/sambt/workarea/nonpointing/diphoton_files/403286.root
